@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Mia Patzakis">
+
+<title>Stat c131a Final Project</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="final_project_copy_131a_files/libs/clipboard/clipboard.min.js"></script>
+<script src="final_project_copy_131a_files/libs/quarto-html/quarto.js"></script>
+<script src="final_project_copy_131a_files/libs/quarto-html/popper.min.js"></script>
+<script src="final_project_copy_131a_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="final_project_copy_131a_files/libs/quarto-html/anchor.min.js"></script>
+<link href="final_project_copy_131a_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="final_project_copy_131a_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="final_project_copy_131a_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="final_project_copy_131a_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="final_project_copy_131a_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Stat c131a Final Project</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Mia Patzakis </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"broom"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"GGally"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="background" class="level1">
+<h1>Background</h1>
+<p>Primary biliary cholingitis (PBC) is a chronic disease where someone’s bile ducts in the liver become inflamed and damaged. The bile ducts transport bile from the liver to the small intestine, where it helps digest food. When the bile ducts become inflamed and lose function, bile can build up in the liver and cause liver damage and even liver failure, causing symptoms like abdominal pain, jaundice, and swelling. Because this condition involves tissue being destroyed by one’s own body, it is considered an autoimmune disease. PBC is not incredibly common, with around 200,000 people affected each year in the United States. It is more common in women than men - only 10% of cases can be attributed to men. Some risk factors for PBC include being female, being between the ages of 30 and 60, being genetically predisposed to getting the condition, getting frequent urinary tract infections and possibly some behaviors like smoking.</p>
+<p>Survival analysis is a type of “time-to-event” analysis, where the variable “time-to-event” is the time until an event of interest occurs. In the survival context, the event of interest is an adverse event such as death or a heart attack. Thus survival analysis analyzes the amount of time until death occurs. Survival analysis is applicable for many medical studies, such as examining how long a patient can live with a certain disease or condition, comparing survival rates in different clinical trial groups, and other questions regarding rates of survival due to different factors or past a given time. It is thus particularly prominent for studying cancer prognoses. For example, one may study the survival time from relapse or remission, or survival time after starting a particular treatment.</p>
+<p>This project may be helpful for the “real world” because the number of days a person survives with PBC is influenced by many factors, like age, different biomarkers, or drugs, and there is inconclusive evidence on how these factors affect PBC mortality. This project demonstrates how researchers could use predictive methods like multivariate linear regression to pinpoint relationships between these explanatory variables and number of days someone can survive. Additionally, this project explores many different methods to predict an outcome, like random forests, decision trees and cross-validation, which can be helpful for research on survival analyses for not only PBC but other diseases.</p>
+</section>
+<section id="first-steps" class="level1">
+<h1>First Steps</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cholangitis <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"cholangitis.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># reading data into R</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># creating levels for all categorical variables</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>status_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"C"</span>, <span class="st">"CL"</span>, <span class="st">"D"</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>drug_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"D-penicillamine"</span>, <span class="st">"Placebo"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>sex_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"F"</span>,<span class="st">"M"</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>ascites_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Y"</span>, <span class="st">"N"</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>hepatomegaly_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Y"</span>, <span class="st">"N"</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>spiders_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Y"</span>, <span class="st">"N"</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>edema_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"N"</span>, <span class="st">"S"</span>, <span class="st">"Y"</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>stage_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"1"</span>,<span class="st">"2"</span>,<span class="st">"3"</span>,<span class="st">"4"</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># adding factored categorical variables in place of nonfactored variables</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>cholangitis<span class="sc">$</span>status <span class="ot">&lt;-</span> <span class="fu">factor</span>(cholangitis<span class="sc">$</span>status, <span class="at">levels=</span>status_levels)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>cholangitis<span class="sc">$</span>drug <span class="ot">&lt;-</span> <span class="fu">as.character</span>(<span class="fu">factor</span>(cholangitis<span class="sc">$</span>drug, <span class="at">levels=</span>drug_levels))</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>cholangitis<span class="sc">$</span>sex <span class="ot">&lt;-</span> <span class="fu">factor</span>(cholangitis<span class="sc">$</span>sex, <span class="at">levels=</span>sex_levels)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>cholangitis<span class="sc">$</span>ascites <span class="ot">&lt;-</span> <span class="fu">factor</span>(cholangitis<span class="sc">$</span>ascites, <span class="at">levels=</span>ascites_levels)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>cholangitis<span class="sc">$</span>hepatomegaly <span class="ot">&lt;-</span> <span class="fu">factor</span>(cholangitis<span class="sc">$</span>hepatomegaly, <span class="at">levels=</span>hepatomegaly_levels)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>cholangitis<span class="sc">$</span>spiders <span class="ot">&lt;-</span> <span class="fu">factor</span>(cholangitis<span class="sc">$</span>spiders, <span class="at">levels=</span>spiders_levels)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>cholangitis<span class="sc">$</span>edema <span class="ot">&lt;-</span> <span class="fu">factor</span>(cholangitis<span class="sc">$</span>edema, <span class="at">levels=</span>edema_levels)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>cholangitis<span class="sc">$</span>stage <span class="ot">&lt;-</span> <span class="fu">factor</span>(cholangitis<span class="sc">$</span>stage, <span class="at">levels=</span>stage_levels)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>cholangitis<span class="sc">$</span>cholesterol <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(cholangitis<span class="sc">$</span>cholesterol)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>cholangitis <span class="ot">&lt;-</span> cholangitis <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">drug =</span> <span class="fu">replace</span>(drug, <span class="fu">is.na</span>(drug), <span class="st">"NA"</span>))</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co"># creating new category for NA drugs</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>cholangitis <span class="ot">&lt;-</span> cholangitis <span class="sc">%&gt;%</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(tryglicerides) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(cholesterol))</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="co"># getting rid of NA values in categorical columns (only removes 5 rows)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the above code I’ve loaded our cholangitis data into R studio and turned the categorical variables into factors. I also turned the “NA” values in the drug vector into it’s own category of drug and removed numerical NA values.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creating a pairs plot for first first set of variables with n_days</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(cholangitis[,<span class="fu">c</span>(<span class="st">"n_days"</span>, <span class="st">"drug"</span>, <span class="st">"ascites"</span>, <span class="st">"bilirubin"</span>, <span class="st">"albumin"</span>, </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"copper"</span>, <span class="st">"alk_phos"</span>)], <span class="fu">aes</span>(<span class="at">color =</span> drug)) <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>, <span class="at">angle =</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Drug NA category associated with lower n_days"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="final_project_copy_131a_files/figure-html/unnamed-chunk-3-1.png" style="width:60.0%;height:60.0%" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pairs plot for second set of variables with n_days</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(cholangitis[,<span class="fu">c</span>(<span class="st">"n_days"</span>, <span class="st">"sex"</span>, <span class="st">"age"</span>, <span class="st">"spiders"</span>, <span class="st">"cholesterol"</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"sgot"</span>, <span class="st">"tryglicerides"</span>)], <span class="fu">aes</span>(<span class="at">color=</span>sex),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>, <span class="at">angle =</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Age is more negatively associated with n_days for men than women"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="final_project_copy_131a_files/figure-html/unnamed-chunk-4-1.png" style="width:60.0%;height:60.0%" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pairs plot for last set of variables with n_days</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(cholangitis[,<span class="fu">c</span>(<span class="st">"n_days"</span>, <span class="st">"hepatomegaly"</span>, <span class="st">"edema"</span>, <span class="st">"platelets"</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"prothrombin"</span>, <span class="st">"stage"</span>)], <span class="fu">aes</span>(<span class="at">color=</span>hepatomegaly)) <span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>, <span class="at">angle =</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Hepatomegaly positively associated with less n_days than no hep."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="final_project_copy_131a_files/figure-html/unnamed-chunk-5-1.png" style="width:60.0%;height:60.0%" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>For the first step in my EDA I made a pairs plot to visualize the categorical and numerical variables against one another and how they correlate with n_days. Because there are so many explanatory variables, I created three pairs plots all with a different combination of categorical and numerical variables in three different code chunks so that the plot doesn’t get too cramped. Below is more EDA and my analysis of these plots.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># selecting all continuous variables to create correlation heat map</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>numeric_data <span class="ot">&lt;-</span> cholangitis <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_if</span>(is.numeric)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>cor_matrix <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cor</span>(numeric_data))</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>cor_matrix <span class="sc">%&gt;%</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">"Variables_1"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span><span class="fu">c</span>(Variables_1), </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Variables_2"</span>, </span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Correlation"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Correlation) <span class="sc">%&gt;%</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Variables_1 =</span> <span class="fu">factor</span>(Variables_1, <span class="at">levels =</span> <span class="fu">unique</span>(Variables_1)),</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">Variables_2 =</span> <span class="fu">factor</span>(Variables_2, <span class="at">levels =</span> <span class="fu">unique</span>(Variables_2))) <span class="sc">%&gt;%</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Variables_1, <span class="at">y =</span> Variables_2)) <span class="sc">+</span> </span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_tile</span>(<span class="fu">aes</span>(<span class="at">fill =</span> Correlation)) <span class="sc">+</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"black"</span>, <span class="at">high =</span> <span class="st">"red"</span>,</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>                        <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.2</span>)) <span class="sc">+</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_discrete</span>(<span class="at">guide =</span> <span class="fu">guide_axis</span>(<span class="at">n.dodge =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_discrete</span>(<span class="at">guide=</span><span class="fu">guide_axis</span>(<span class="at">n.dodge=</span><span class="fl">1.5</span>)) <span class="sc">+</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">6</span>),</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text.x=</span><span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">45</span>,<span class="at">hjust=</span><span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Most variables weakly or not correlated with one another"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="final_project_copy_131a_files/figure-html/unnamed-chunk-6-1.png" style="width:60.0%;height:60.0%" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Here I’ve selected all of the numerical continuous variables to create a correlation heat map to see to what degree each variable correlates with each other. I’ve also included the “ID” variable so that we can see if the ID numbers also correlate with the other variables in any notable way. We can see from the heat map that the ID variable does not correlate significantly with the other variables.</p>
+<p>After performing EDA, we can see that all of the numerical variables are relatively symmetrical and normally-distributed, as shown from the density plots in each pairs plot. The variables bilirubin, copper, cholesterol and prothrombin, seem to be skewed-right. Many variables, as apparent from the pairs plot scatter plots, are clustered close together with a few outstanding points. This suggests that we may need to log transform these variables. From our correlation matrix heat map (and our pairs plots) we can see that most of the explanatory variables have a weakly negative or no correlation with n_days survived. Most of the explanatory variables are also not correlated with one another. Bilirubin seems to weakly correlate with most continuous variables like sgot, cholesterol, promthrombin and tryglicerides. Albumin seems to have the highest correlation with n_days. As we can see from the second pairs plot, there are many more females than males in the dataset, which is consistent with the fact that PBC is more common in women than men.</p>
+</section>
+<section id="exploratory-modeling" class="level1">
+<h1>Exploratory Modeling</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculating cooks distances using the filtered data frame</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>cholangitis<span class="sc">$</span>cooks <span class="ot">&lt;-</span> <span class="fu">cooks.distance</span>(<span class="fu">lm</span>(n_days <span class="sc">~</span> ., </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">data =</span> cholangitis))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cholangitis, <span class="fu">aes</span>(<span class="at">x=</span>id,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y=</span>cooks)) <span class="sc">+</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Observation Number"</span>) <span class="sc">+</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cook's Distance"</span>) <span class="sc">+</span> </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Few points over 0.03 Cook's Distance"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="final_project_copy_131a_files/figure-html/unnamed-chunk-7-1.png" style="width:50.0%;height:50.0%" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filtering out ids above 0.03 cooks distance</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>cholangitis <span class="ot">&lt;-</span> cholangitis <span class="sc">%&gt;%</span> <span class="fu">filter</span>(cooks <span class="sc">&lt;</span> <span class="fl">0.03</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the above code chunk, I’ve created a Cook’s distance plot to see how much the coefficients in the linear model will change if each observation is left out, so as to see if I should exclude any points from the regression model that have too large an influence on the prediction. We can see that the Cook’s distance is very large for a few points, so I decided to exclude points with a distance of over 0.03 and reassign the cholangitis variable without them. After removing these points, I moved on to see if I should transform any variables.</p>
+<p>I decided to log transform the variables bilirubin, cholesterol, copper, alk_phos, sgot, tryglicerides, and prothrombin because these variables are all skewed right and non-homoskedastic before being log-transformed. I will keep these variables logged for the rest of my modeling and prediction because these transformations clarify the relationships between these variables and n_days.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># putting together the model with all factors except id</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>first_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(n_days<span class="sc">~</span> status <span class="sc">+</span> drug <span class="sc">+</span> age<span class="sc">+</span>sex<span class="sc">+</span>ascites<span class="sc">+</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                  hepatomegaly<span class="sc">+</span> spiders<span class="sc">+</span> edema<span class="sc">+</span> <span class="fu">log</span>(bilirubin)<span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">log</span>(cholesterol)<span class="sc">+</span> albumin<span class="sc">+</span> <span class="fu">log</span>(copper)<span class="sc">+</span> <span class="fu">log</span>(alk_phos)<span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">log</span>(sgot)<span class="sc">+</span><span class="fu">log</span>(tryglicerides)<span class="sc">+</span>platelets<span class="sc">+</span> <span class="fu">log</span>(prothrombin)<span class="sc">+</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                  stage, <span class="at">data =</span> cholangitis)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(first_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = n_days ~ status + drug + age + sex + ascites + hepatomegaly + 
+    spiders + edema + log(bilirubin) + log(cholesterol) + albumin + 
+    log(copper) + log(alk_phos) + log(sgot) + log(tryglicerides) + 
+    platelets + log(prothrombin) + stage, data = cholangitis)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1741.24  -545.80   -37.22   475.13  2472.38 
+
+Coefficients:
+                     Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)        -4.290e+03  1.796e+03  -2.389 0.017397 *  
+statusCL           -4.004e+02  1.840e+02  -2.177 0.030105 *  
+statusD            -5.062e+02  1.092e+02  -4.636 4.88e-06 ***
+drugNA             -4.170e+02  1.069e+02  -3.901 0.000113 ***
+drugPlacebo        -2.282e+01  9.675e+01  -0.236 0.813632    
+age                 1.206e-03  1.249e-02   0.097 0.923115    
+sexM                1.190e+02  1.403e+02   0.848 0.396940    
+ascitesN           -1.624e+02  2.174e+02  -0.747 0.455660    
+hepatomegalyN       5.806e+01  9.000e+01   0.645 0.519256    
+spidersN           -8.656e+00  9.951e+01  -0.087 0.930725    
+edemaS             -3.127e+02  1.430e+02  -2.187 0.029350 *  
+edemaY             -8.012e+02  2.639e+02  -3.037 0.002557 ** 
+log(bilirubin)     -2.104e+02  5.873e+01  -3.582 0.000385 ***
+log(cholesterol)   -1.897e+02  1.146e+02  -1.655 0.098647 .  
+albumin             6.010e+02  1.124e+02   5.347 1.54e-07 ***
+log(copper)        -1.552e+02  6.014e+01  -2.581 0.010224 *  
+log(alk_phos)       3.961e+02  6.283e+01   6.304 7.98e-10 ***
+log(sgot)           3.940e+01  1.088e+02   0.362 0.717438    
+log(tryglicerides)  1.057e+02  1.012e+02   1.045 0.296847    
+platelets           2.674e-01  4.636e-01   0.577 0.564434    
+log(prothrombin)    1.316e+03  5.744e+02   2.291 0.022512 *  
+stage2             -2.967e+01  2.033e+02  -0.146 0.884063    
+stage3             -3.071e+02  2.001e+02  -1.535 0.125680    
+stage4             -4.349e+02  2.111e+02  -2.060 0.040043 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 817.5 on 383 degrees of freedom
+Multiple R-squared:  0.4733,    Adjusted R-squared:  0.4416 
+F-statistic: 14.96 on 23 and 383 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Above is the model I created to predict n_days with all of the factors in the data set, before I decide how to subset my variables. As aforementioned, I excluded observations with a cook’s distance above 0.03, and kept certain variables log-transformed. The summary of this model shows that variables like bilirubin logged and copper logged and others with low p-values are nonzero given the inclusion of the other variables.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Diagnostics for this model</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># creating residuals and predicted values</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>cholangitis<span class="sc">$</span>resids <span class="ot">&lt;-</span> <span class="fu">resid</span>(first_model)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>cholangitis<span class="sc">$</span>first_predictions <span class="ot">&lt;-</span> <span class="fu">fitted</span>(first_model)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># creating residuals variable with all-variables model</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>cholangitis <span class="sc">%&gt;%</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> first_predictions, <span class="at">y =</span> resids)) <span class="sc">+</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> .<span class="dv">5</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">y=</span><span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Predictions"</span>) <span class="sc">+</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Residuals from first MLR model show no pattern"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="final_project_copy_131a_files/figure-html/unnamed-chunk-13-1.png" style="width:50.0%;height:50.0%" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creating qqplot </span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>cholangitis <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span><span class="fu">aes</span>(<span class="at">sample=</span>resids)) <span class="sc">+</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span> <span class="fu">stat_qq_line</span>() <span class="sc">+</span> </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Residuals deviate slightly from qqplot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="final_project_copy_131a_files/figure-html/unnamed-chunk-13-2.png" style="width:50.0%;height:50.0%" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>To run diagnostics for this initial model that includes all of the explanatory variables, I created a residuals vs.&nbsp;predicted values scatter plot to see if the residuals violate any of the assumptions that they should have a mean of 0, no trend or shape, and a constant variance. As we can see from the above plot, the mean of the residuals does appear to be 0, and they do not appear to follow a trend, so these regression assumptions are met. The variance does not appear to be constant, however, as the center clump of residuals have a smaller variance compared to residuals above 0 and on the edges of the cluster, so the residuals do not appear to meet that assumption. I also created a qqplot to check the assumption of residuals being normally distributed. The residuals follow the qqplot fairly well, but deviate upward at the right tail, suggesting a slight departure from normality.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># what drugs are associated with most number of days?</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span>cholangitis, </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> n_days, </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">fill =</span> drug)) <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Drug NA cateogry associated with lowest n_days"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="final_project_copy_131a_files/figure-html/unnamed-chunk-14-1.png" style="width:50.0%;height:50.0%" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>According to our pairs plot from earlier (from which I’ve included a larger box plot above), there visually appears to be no significant difference between D-penicillamine or the placebo on the number of days survived. However, according to the drug placebo coefficient in the linear model, someone receiving the placebo is expected to have n_days 22.8 lower than with D-penicillamine, assuming all other variables are held constant. However, this coefficient has a high p-value, so there isn’t strong evidence to suggest a significant difference in n_days between individuals with the placebo and with D-penicillamine.</p>
+<p>However, the “NA” drug category visually seems to span a lower range of n_days than the placebo and D-penicillamine. In the linear model, the estimated coefficient is -417, implying that individuals with DrugNA have n_days lower by 417 compared to individuals with D-penicillamine, holding other variables constant. The p-value for this estimate is very small, suggesting there is a significant notable impact on this drug category and lowering the outcome of n_days. Because this category is “NA”, and there is no difference in n_day outcome between the drug and the placibo, there is little evidence from this data that the drug has an impact on number of days survived in this study.</p>
+</section>
+<section id="predictive-modeling" class="level1">
+<h1>Predictive Modeling</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># making new df with log transformed vars</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># "cholangitis-transformed"</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>ct <span class="ot">&lt;-</span> cholangitis <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">bilirubinL =</span> <span class="fu">log</span>(bilirubin),</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">cholesterolL =</span> <span class="fu">log</span>(cholesterol),</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">copperL =</span> <span class="fu">log</span>(copper),</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">alk_phosL =</span> <span class="fu">log</span>(alk_phos),</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">sgotL =</span> <span class="fu">log</span>(sgot), </span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">trygliceridesL =</span> <span class="fu">log</span>(tryglicerides),</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">promthrombinL =</span> <span class="fu">log</span>(prothrombin)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="co">#taking out the old non transformed and unneeded variables</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(<span class="st">"bilirubin"</span>, <span class="st">"cholesterol"</span>, <span class="st">"copper"</span>,</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">"alk_phos"</span>, <span class="st">"sgot"</span>, <span class="st">"tryglicerides"</span>, </span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">"prothrombin"</span>, <span class="st">"cooks"</span>,</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">"id"</span>, <span class="st">"resids"</span>, <span class="st">"first_predictions"</span>) </span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here, I’ve made a new data frame “ct” (cholangitis transformed) with the log transformed variables replacing the old variables. I have also gotten rid of the columns, “cooks”, “id”, “resids”, and “first_predictions” so that they do not interfere with my model as they are not explanatory variables.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># train test split</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">131</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>train_pct <span class="ot">&lt;-</span> .<span class="dv">7</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>indices <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">1</span>, <span class="at">to =</span> <span class="fu">nrow</span>(ct), <span class="at">by =</span> <span class="dv">1</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>training_indices <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x =</span> indices, <span class="at">replace =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">size =</span> <span class="fu">nrow</span>(ct)<span class="sc">*</span>train_pct)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>chol_train <span class="ot">&lt;-</span> ct <span class="sc">%&gt;%</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(training_indices)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>chol_test <span class="ot">&lt;-</span> ct <span class="sc">%&gt;%</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="sc">-</span>training_indices)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The above code contains my train-test split. I decided to use a lower ratio split of 0.7 so that the training set isn’t too large and we have a substantial amount of data to test on. Too large of a training set can train the model to fit too well (over-fit) to the training set’s nuances and not model the patterns of the testing set accurately, especially because there are so many variables being included in this model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># installing and loading the leaps package </span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"leaps"</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaps)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># variable selection</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>best_k_model_results <span class="ot">&lt;-</span> <span class="fu">regsubsets</span>(n_days <span class="sc">~</span> ., <span class="at">data =</span> chol_train, <span class="at">nvmax =</span> <span class="dv">23</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(best_k_model_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Subset selection object
+Call: regsubsets.formula(n_days ~ ., data = chol_train, nvmax = 23)
+23 Variables  (and intercept)
+               Forced in Forced out
+statusCL           FALSE      FALSE
+statusD            FALSE      FALSE
+drugNA             FALSE      FALSE
+drugPlacebo        FALSE      FALSE
+age                FALSE      FALSE
+sexM               FALSE      FALSE
+ascitesN           FALSE      FALSE
+hepatomegalyN      FALSE      FALSE
+spidersN           FALSE      FALSE
+edemaS             FALSE      FALSE
+edemaY             FALSE      FALSE
+albumin            FALSE      FALSE
+platelets          FALSE      FALSE
+stage2             FALSE      FALSE
+stage3             FALSE      FALSE
+stage4             FALSE      FALSE
+bilirubinL         FALSE      FALSE
+cholesterolL       FALSE      FALSE
+copperL            FALSE      FALSE
+alk_phosL          FALSE      FALSE
+sgotL              FALSE      FALSE
+trygliceridesL     FALSE      FALSE
+promthrombinL      FALSE      FALSE
+1 subsets of each size up to 23
+Selection Algorithm: exhaustive
+          statusCL statusD drugNA drugPlacebo age sexM ascitesN hepatomegalyN
+1  ( 1 )  " "      " "     " "    " "         " " " "  " "      " "          
+2  ( 1 )  " "      " "     " "    " "         " " " "  " "      " "          
+3  ( 1 )  " "      " "     " "    " "         " " " "  " "      " "          
+4  ( 1 )  " "      "*"     " "    " "         " " " "  " "      " "          
+5  ( 1 )  " "      "*"     "*"    " "         " " " "  " "      " "          
+6  ( 1 )  " "      "*"     "*"    " "         " " " "  " "      " "          
+7  ( 1 )  " "      "*"     "*"    " "         " " " "  " "      " "          
+8  ( 1 )  " "      "*"     "*"    " "         " " " "  " "      " "          
+9  ( 1 )  " "      "*"     "*"    " "         " " " "  " "      " "          
+10  ( 1 ) " "      "*"     "*"    " "         " " " "  " "      " "          
+11  ( 1 ) " "      "*"     "*"    " "         " " " "  " "      " "          
+12  ( 1 ) "*"      "*"     "*"    " "         " " " "  " "      " "          
+13  ( 1 ) "*"      "*"     "*"    " "         " " " "  " "      " "          
+14  ( 1 ) "*"      "*"     "*"    " "         " " "*"  " "      " "          
+15  ( 1 ) "*"      "*"     "*"    " "         " " "*"  " "      " "          
+16  ( 1 ) "*"      "*"     "*"    " "         " " "*"  " "      " "          
+17  ( 1 ) "*"      "*"     "*"    " "         " " "*"  " "      "*"          
+18  ( 1 ) "*"      "*"     "*"    " "         " " "*"  "*"      "*"          
+19  ( 1 ) "*"      "*"     "*"    " "         " " "*"  "*"      "*"          
+20  ( 1 ) "*"      "*"     "*"    "*"         " " "*"  "*"      "*"          
+21  ( 1 ) "*"      "*"     "*"    "*"         " " "*"  "*"      "*"          
+22  ( 1 ) "*"      "*"     "*"    "*"         " " "*"  "*"      "*"          
+23  ( 1 ) "*"      "*"     "*"    "*"         "*" "*"  "*"      "*"          
+          spidersN edemaS edemaY albumin platelets stage2 stage3 stage4
+1  ( 1 )  " "      " "    " "    " "     " "       " "    " "    " "   
+2  ( 1 )  " "      " "    " "    "*"     " "       " "    " "    " "   
+3  ( 1 )  " "      " "    " "    "*"     " "       " "    " "    " "   
+4  ( 1 )  " "      " "    " "    "*"     " "       " "    " "    " "   
+5  ( 1 )  " "      " "    " "    "*"     " "       " "    " "    " "   
+6  ( 1 )  " "      " "    " "    "*"     " "       "*"    " "    " "   
+7  ( 1 )  " "      " "    "*"    "*"     " "       "*"    " "    " "   
+8  ( 1 )  " "      " "    "*"    "*"     " "       " "    "*"    "*"   
+9  ( 1 )  " "      " "    "*"    "*"     " "       " "    "*"    "*"   
+10  ( 1 ) " "      " "    "*"    "*"     " "       " "    "*"    "*"   
+11  ( 1 ) " "      " "    "*"    "*"     " "       " "    "*"    "*"   
+12  ( 1 ) " "      " "    "*"    "*"     " "       " "    "*"    "*"   
+13  ( 1 ) " "      " "    "*"    "*"     "*"       " "    "*"    "*"   
+14  ( 1 ) " "      " "    "*"    "*"     "*"       " "    "*"    "*"   
+15  ( 1 ) "*"      " "    "*"    "*"     "*"       " "    "*"    "*"   
+16  ( 1 ) "*"      "*"    "*"    "*"     "*"       " "    "*"    "*"   
+17  ( 1 ) "*"      "*"    "*"    "*"     "*"       " "    "*"    "*"   
+18  ( 1 ) "*"      "*"    "*"    "*"     "*"       " "    "*"    "*"   
+19  ( 1 ) "*"      "*"    "*"    "*"     "*"       " "    "*"    "*"   
+20  ( 1 ) "*"      "*"    "*"    "*"     "*"       " "    "*"    "*"   
+21  ( 1 ) "*"      "*"    "*"    "*"     "*"       " "    "*"    "*"   
+22  ( 1 ) "*"      "*"    "*"    "*"     "*"       "*"    "*"    "*"   
+23  ( 1 ) "*"      "*"    "*"    "*"     "*"       "*"    "*"    "*"   
+          bilirubinL cholesterolL copperL alk_phosL sgotL trygliceridesL
+1  ( 1 )  "*"        " "          " "     " "       " "   " "           
+2  ( 1 )  "*"        " "          " "     " "       " "   " "           
+3  ( 1 )  "*"        " "          " "     "*"       " "   " "           
+4  ( 1 )  "*"        " "          " "     "*"       " "   " "           
+5  ( 1 )  "*"        " "          " "     "*"       " "   " "           
+6  ( 1 )  "*"        " "          " "     "*"       " "   " "           
+7  ( 1 )  "*"        " "          " "     "*"       " "   " "           
+8  ( 1 )  "*"        " "          " "     "*"       " "   " "           
+9  ( 1 )  "*"        " "          " "     "*"       " "   " "           
+10  ( 1 ) "*"        " "          "*"     "*"       " "   " "           
+11  ( 1 ) "*"        " "          "*"     "*"       " "   "*"           
+12  ( 1 ) "*"        " "          "*"     "*"       " "   "*"           
+13  ( 1 ) "*"        " "          "*"     "*"       " "   "*"           
+14  ( 1 ) "*"        " "          "*"     "*"       " "   "*"           
+15  ( 1 ) "*"        " "          "*"     "*"       " "   "*"           
+16  ( 1 ) "*"        " "          "*"     "*"       " "   "*"           
+17  ( 1 ) "*"        " "          "*"     "*"       " "   "*"           
+18  ( 1 ) "*"        " "          "*"     "*"       " "   "*"           
+19  ( 1 ) "*"        "*"          "*"     "*"       " "   "*"           
+20  ( 1 ) "*"        "*"          "*"     "*"       " "   "*"           
+21  ( 1 ) "*"        "*"          "*"     "*"       "*"   "*"           
+22  ( 1 ) "*"        "*"          "*"     "*"       "*"   "*"           
+23  ( 1 ) "*"        "*"          "*"     "*"       "*"   "*"           
+          promthrombinL
+1  ( 1 )  " "          
+2  ( 1 )  " "          
+3  ( 1 )  " "          
+4  ( 1 )  " "          
+5  ( 1 )  " "          
+6  ( 1 )  " "          
+7  ( 1 )  " "          
+8  ( 1 )  " "          
+9  ( 1 )  "*"          
+10  ( 1 ) "*"          
+11  ( 1 ) "*"          
+12  ( 1 ) "*"          
+13  ( 1 ) "*"          
+14  ( 1 ) "*"          
+15  ( 1 ) "*"          
+16  ( 1 ) "*"          
+17  ( 1 ) "*"          
+18  ( 1 ) "*"          
+19  ( 1 ) "*"          
+20  ( 1 ) "*"          
+21  ( 1 ) "*"          
+22  ( 1 ) "*"          
+23  ( 1 ) "*"          </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(best_k_model_results)<span class="sc">$</span>rsq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 0.2106674 0.3129160 0.3598385 0.3801609 0.4018418 0.4163264 0.4279232
+ [8] 0.4373175 0.4468936 0.4522646 0.4564355 0.4598085 0.4614978 0.4634640
+[15] 0.4648739 0.4660019 0.4669899 0.4679186 0.4682003 0.4683679 0.4684589
+[22] 0.4684751 0.4684823</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plotting the number of variables included against rsq values</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>rsq_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">num_vals =</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">23</span>, <span class="at">by =</span> <span class="dv">1</span>), </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">rsqs =</span> <span class="fu">summary</span>(best_k_model_results)<span class="sc">$</span>rsq)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rsq_df, <span class="fu">aes</span>(<span class="at">x=</span>num_vals, <span class="at">y=</span>rsqs)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">23</span>, <span class="at">by =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Number of Variables Included"</span>) <span class="sc">+</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"RSQ values"</span>) <span class="sc">+</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"RSQs level out with inclusion of 11 variables"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="final_project_copy_131a_files/figure-html/unnamed-chunk-19-1.png" style="width:50.0%;height:50.0%" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>I used a stepwise variable selection method to see which variables have the biggest impact on best predicting n_days as more variables are included in the model. As we can see from the rsq output and the graph above that shows the impact of the number of variables on the rsq for predicting n_days, adding more variables than 11 starts to have little impact on improving the rsq. We can now compare the root mean squared error of models with different amounts of variables to confirm this information and what variables to include in the final model.</p>
+<p>I selected different amounts of variables based on decreasing importance to create different models to test and see which one has the lowest RMSE. From this stepwise variable selection, I derived five different models to test:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creating prediction vectors for each of the linear models using test data</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>formulas <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  n_days <span class="sc">~</span> bilirubinL <span class="sc">+</span> albumin,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  n_days <span class="sc">~</span> bilirubinL <span class="sc">+</span> albumin <span class="sc">+</span> alk_phosL <span class="sc">+</span> status,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  n_days <span class="sc">~</span> bilirubinL <span class="sc">+</span> albumin <span class="sc">+</span> alk_phosL <span class="sc">+</span> status <span class="sc">+</span> drug <span class="sc">+</span> stage <span class="sc">+</span> edema <span class="sc">+</span> promthrombinL,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  n_days <span class="sc">~</span> bilirubinL <span class="sc">+</span> albumin <span class="sc">+</span> alk_phosL <span class="sc">+</span> status <span class="sc">+</span> drug <span class="sc">+</span> stage <span class="sc">+</span> edema <span class="sc">+</span> promthrombinL <span class="sc">+</span> copperL,</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  n_days <span class="sc">~</span> bilirubinL <span class="sc">+</span> albumin <span class="sc">+</span> alk_phosL <span class="sc">+</span> status <span class="sc">+</span> drug <span class="sc">+</span> stage <span class="sc">+</span> edema <span class="sc">+</span> promthrombinL <span class="sc">+</span> copperL <span class="sc">+</span> trygliceridesL)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co"># fitting each model</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">lapply</span>(formulas, <span class="cf">function</span>(f) <span class="fu">lm</span>(f, <span class="at">data =</span> chol_train))</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">lapply</span>(models, predict, <span class="at">newdata =</span> chol_test)</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co">#RMSE's for each model</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>observations <span class="ot">&lt;-</span> chol_test <span class="sc">%&gt;%</span> <span class="fu">select</span>(n_days) <span class="sc">%&gt;%</span> <span class="fu">pull</span>()</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>RMSEs <span class="ot">&lt;-</span> <span class="fu">sapply</span>(predictions, <span class="cf">function</span>(pred) <span class="fu">sqrt</span>(<span class="fu">mean</span>((pred <span class="sc">-</span> observations)<span class="sc">^</span><span class="dv">2</span>)))</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste0</span>(<span class="st">"RMSE for Models: "</span>, <span class="fu">paste</span>(RMSEs, <span class="at">collapse =</span> <span class="st">" | "</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>RMSE for Models: 970.229941660931 | 895.748210614096 | 858.169882021088 | 850.956369460895 | 857.675505144485</code></pre>
+</div>
+</div>
+<p>Above I found the RMSE for each model I created by using our test data to predict new values of n_days and finding the error with the actual observed n_days observations. Because the RMSE is smallest for the fourth model, that is the subset of variables that I will include, because the error is minimized when predicting the outcome n_days on the test set.</p>
+<p>My linear model thus includes the variables bilirubin (logged), albumin, alk_phos (logged), status, drug, stage, edema, promthrombin (logged), and copper (logged) to predict n_days.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># loading rpart and plot libraries</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># constructing the decision tree model using all variables </span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>decision_tree <span class="ot">&lt;-</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rpart</span>(<span class="at">formula =</span> n_days <span class="sc">~</span> ., <span class="at">data =</span> chol_train)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># displaying the tree</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(decision_tree, <span class="at">type =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="final_project_copy_131a_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>decision_tree</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>n= 284 
+
+node), split, n, deviance, yval
+      * denotes terminal node
+
+  1) root 284 318648200 1950.4190  
+    2) bilirubinL&gt;=0.7651974 94  68970840 1302.5640  
+      4) stage=4 43  14172560  856.0698  
+        8) albumin&lt; 3.535 29   4586071  642.1379 *
+        9) albumin&gt;=3.535 14   5509970 1299.2140 *
+      5) stage=1,2,3 51  38998260 1679.0200  
+       10) bilirubinL&gt;=1.824029 18   4450582 1108.2780 *
+       11) bilirubinL&lt; 1.824029 33  25486010 1990.3330  
+         22) bilirubinL&lt; 1.081662 9   6458734 1447.4440 *
+         23) bilirubinL&gt;=1.081662 24  15380020 2193.9170 *
+    3) bilirubinL&lt; 0.7651974 190 190705100 2270.9370  
+      6) albumin&lt; 3.485 73  53127630 1768.9590  
+       12) cholesterolL&lt; 6.12686 66  38993120 1677.4550  
+         24) drug=D-penicillamine,NA 47  19549290 1490.2770  
+           48) status=CL,D 15   4545393 1037.6670 *
+           49) status=C 32  10490670 1702.4380 *
+         25) drug=Placebo 19  13723810 2140.4740 *
+       13) cholesterolL&gt;=6.12686 7   8371461 2631.7140 *
+      7) albumin&gt;=3.485 117 107705700 2584.1370  
+       14) alk_phosL&lt; 7.513702 92  64827460 2406.4570  
+         28) promthrombinL&lt; 2.415874 84  50239660 2305.3450  
+           56) bilirubinL&gt;=-0.05268026 33  15826510 2019.7880  
+            112) promthrombinL&gt;=2.356115 8   1005040 1452.5000 *
+            113) promthrombinL&lt; 2.356115 25  11423100 2201.3200 *
+           57) bilirubinL&lt; -0.05268026 51  29981050 2490.1180  
+            114) sgotL&lt; 4.046112 15   5841156 2061.4000 *
+            115) sgotL&gt;=4.046112 36  20234170 2668.7500  
+              230) promthrombinL&lt; 2.365549 29  12684520 2473.7930 *
+              231) promthrombinL&gt;=2.365549 7   1880992 3476.4290 *
+         29) promthrombinL&gt;=2.415874 8   4711907 3468.1250 *
+       15) alk_phosL&gt;=7.513702 25  29285370 3238.0000  
+         30) age&gt;=18365 15  19519670 2848.6000 *
+         31) age&lt; 18365 10   4079483 3822.1000 *</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">printcp</span>(decision_tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Regression tree:
+rpart(formula = n_days ~ ., data = chol_train)
+
+Variables actually used in tree construction:
+ [1] age           albumin       alk_phosL     bilirubinL    cholesterolL 
+ [6] drug          promthrombinL sgotL         stage         status       
+
+Root node error: 318648243/284 = 1122001
+
+n= 284 
+
+         CP nsplit rel error  xerror     xstd
+1  0.185070      0   1.00000 1.01066 0.074026
+2  0.093745      1   0.81493 0.91481 0.068359
+3  0.049585      2   0.72118 0.79883 0.063377
+4  0.042658      3   0.67160 0.84473 0.071826
+5  0.030993      4   0.62894 0.80326 0.069070
+6  0.028438      5   0.59795 0.78145 0.068716
+7  0.018086      6   0.56951 0.78204 0.071617
+8  0.017951      7   0.55143 0.77696 0.074781
+9  0.017845      8   0.53347 0.78001 0.074815
+10 0.014652      9   0.51563 0.79025 0.076802
+11 0.014164     12   0.47167 0.81451 0.078256
+12 0.012793     13   0.45751 0.81542 0.077964
+13 0.011446     14   0.44472 0.83290 0.078159
+14 0.010665     15   0.43327 0.83020 0.077963
+15 0.010000     16   0.42261 0.82925 0.077901</code></pre>
+</div>
+</div>
+<p>Above I fit a regression tree with all of the explanatory variables. In this first pass at a regression tree, the variables being used to make splits are bilirubin (logged), drug, stage, albumin, alk_phos (logged), promthrombin (logged), age, status, and sgot (logged).</p>
+<p>From the printed cp output, we can see that the lowest xerror value while keeping a low cp, maintaining the lowest split number possible, comes with five splits. The xerror is 0.78145 and the cp value for a five-split tree is 0.028438. Because it is worth having more tree branches for a smaller cp value, we will use the tree with split number five, because it minimizes the number of splits while maintaining a small cp and xerror. Thus we can create our final decision tree model with the new specified cp value:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># new decision tree model with lower cp</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>dt_model <span class="ot">&lt;-</span> <span class="fu">rpart</span>(<span class="at">formula =</span> n_days <span class="sc">~</span> ., <span class="at">data =</span> chol_train, </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">cp =</span> <span class="fl">0.028438</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(dt_model, <span class="at">type =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="final_project_copy_131a_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In this new “pruned” tree model with a cp of 0.028, the variables bilirubin (logged), albumin, alk_phos (logged), stage, and promthrombin (logged) are being used to make splits. Now we can move on to make a random forest model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># loading random forest package</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creating our random forest model with all variables</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>random_forest <span class="ot">&lt;-</span> </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">randomForest</span>(<span class="at">formula =</span> n_days<span class="sc">~</span>., </span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> chol_train, <span class="co"># creating model with train data</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">cutoff =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>),</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">importance =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="fu">importance</span>(random_forest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   %IncMSE IncNodePurity
+status         10.70264624      15963054
+drug            5.06181273       4591141
+age             2.57544536      18761103
+sex             0.04797004       1819147
+ascites         2.43718935       2524479
+hepatomegaly   -0.30142141       2626670
+spiders         0.37430795       1335127
+edema           6.06418074       9458079
+albumin        18.68591078      46339262
+platelets       3.07027333      19695218
+stage           7.51178710      15375585
+bilirubinL     21.16933511      49136448
+cholesterolL    4.16576284      15629910
+copperL         3.64540598      18385750
+alk_phosL       9.05901987      27162306
+sgotL           7.53329678      19326994
+trygliceridesL -0.53165929      13563565
+promthrombinL   9.92459840      23556406</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">varImpPlot</span>(random_forest, </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">main =</span> <span class="st">"Variable Importance Plot"</span>,</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">pch =</span> <span class="dv">16</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="final_project_copy_131a_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Above I fit a random forest model using all explanatory variables to predict n_days. The default number of trees fit in the random forest function is 500. From our random forest importance output and variable importance chart, we can see that bilirubin (logged) and albumin are considered the most important variables because these have some of the highest values both %IncMSE and IncNodePurity.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># random forest prediction object </span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>rf_predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> random_forest, <span class="at">newdata =</span> chol_test)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># decision tree prediction vector</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>dt_predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> dt_model, <span class="at">newdata =</span> chol_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculating RMSE for each model</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>MSE_dt <span class="ot">&lt;-</span> <span class="fu">mean</span>((dt_predictions<span class="sc">-</span>observations)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co"># mse for decision tree model</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(MSE_dt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1028.239</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>MSE_rf <span class="ot">&lt;-</span> <span class="fu">mean</span>((rf_predictions<span class="sc">-</span>observations)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co"># mse for random forest model</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(MSE_rf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 894.4369</code></pre>
+</div>
+</div>
+<p>In the above three code chunks, I output prediction vectors for both my decision tree model and my random forest model so that I could calculate a RMSE for each model, using the observed n_days vector. We can see from the RMSE values that the random forest model is more accurate than the decision tree model.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>RMSE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Linear Regression</td>
+<td>850.9564</td>
+</tr>
+<tr class="even">
+<td>Regression Tree</td>
+<td>1028.239</td>
+</tr>
+<tr class="odd">
+<td>Random Forest</td>
+<td>894.4369</td>
+</tr>
+</tbody>
+</table>
+<p>When we compare the RMSE’s across all of these models, we can see that it is lowest for the MLR model I chose. This suggests that this model performed the best on the test data, meaning that it captured the trends of the cholangitis training data without overfitting in comparison to the decision tree and random forest models I constructed. This is thus the model I will use to predict the number of days of survival after registration for the study.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
